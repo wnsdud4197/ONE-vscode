@@ -1,0 +1,21 @@
+.levelContainer {
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
+}
+
+.levelHeader {
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
+}
+
+.levelTitle {
+  position: sticky;
+  left: 0;
+  width: 90vw;
+  padding: 3px 5px;
+  font-size: smaller;
+  cursor: pointer;
+  background-color: var(--vscode-editor-background, white);
+}
+
+.utility{
+  font-weight: 600;
+}

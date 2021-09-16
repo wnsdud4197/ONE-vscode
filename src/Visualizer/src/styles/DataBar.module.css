@@ -1,0 +1,38 @@
+.dataBarContainer{
+    display: flex;
+    height: 25px;
+    width: auto;
+}
+
+.dataBarTitle{
+    position: sticky;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    left: 0;
+    z-index: 3;
+    padding-left: 3px;
+    margin: 0px;
+    height: 100%;
+    width: 200px;
+    font-weight: 600;
+    border-right: 0.5px solid var(--vscode-foreground, gray);
+    background-color: var(--vscode-editor-background, white);
+}
+
+.dataBar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-bottom: 0.5px solid var(--vscode-foreground, gray);
+}
+
+.dataBarContainer:last-child .dataBar {
+    border: none;
+}
+
+.dataBar > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

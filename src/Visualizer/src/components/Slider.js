@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
-import '../../styles/slider.css';
+import styles from '../styles/Slider.module.css';
+import '../styles/input-range.css';
 
 class Slider extends Component {
     render() {
         return (
-            <div className="slider">
+            <div className={styles.slider}>
                 <span>-</span>
                 <InputRange
                     minValue={100}

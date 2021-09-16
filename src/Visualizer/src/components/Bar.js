@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
+import styles from '../styles/Bar.module.css';
 
 // ================= style ======================= //
 const StyledBar = styled.div`
@@ -18,19 +19,21 @@ class Bar extends Component {
     clickBar(e){
         const info = {
             ...this.props.data
-        }
-        delete info["backgroundColor"]
+        };
+
+        delete info['backgroundColor'];
+
         if (e.ctrlKey) {
-            this.props.clickBar(info, 0)
+            this.props.clickBar(info, 0);
         } else {
-            this.props.clickBar(info, 1)
+            this.props.clickBar(info, 1);
         }
     }
     
     render() {
         return (
             <StyledBar 
-                className="bar"
+                className={styles.bar}
                 calculatedEndTime={this.props.calculatedEndTime}
                 digit={this.props.digit}
                 onClick={(e) => this.clickBar(e)} 
@@ -38,7 +41,9 @@ class Bar extends Component {
                 duration={this.props.data.dur}
                 name={this.props.data.name}
                 backgroundColor={this.props.data.backgroundColor}>
-                <div className="bar-title">{this.props.data.name}</div>
+                <div className={styles.barTitle}>
+                    {this.props.data.name}
+                </div>
             </StyledBar>
         );
     }

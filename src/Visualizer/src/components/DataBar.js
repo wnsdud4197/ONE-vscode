@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
 import Bar from "./Bar";
+import styles from '../styles/DataBar.module.css';
 
 // ================= style ======================= //
 const StyledBargraduation = styled.div`
@@ -20,26 +21,28 @@ class DataBar extends Component {
                         digit={this.props.digit}
                         clickBar={this.props.clickBar}
                         data={ele}
-                        key={`${ele.name}-${ele.ts}`}
-                        />
+                        key={ele.pk}
+                        />;
         });
     }
 
     render() {
         const mapToBarGraduation = () => {
             const result = [];
-            for(let i=0; i<parseInt(this.props.calculatedEndTime/(10**(this.props.digit-1))); i++){
-                result.push(<StyledBargraduation i={i} cnt={parseInt(this.props.calculatedEndTime/(10**(this.props.digit-1)))} key={i}/>)
+            for(let i = 0; i < parseInt(this.props.calculatedEndTime / (10 ** (this.props.digit - 1))); i++){
+                result.push(<StyledBargraduation i={i} cnt={parseInt(this.props.calculatedEndTime / (10 ** (this.props.digit - 1)))} key={i}/>);
             }
-            return result
-        }
+            return result;
+        };
 
         return (
-            <div className="data-bar-container">
-                <header className="data-bar-title"><div>{ this.props.categoryName }</div></header>
-                <div className="data-bar">
+            <div className={styles.dataBarContainer}>
+                <header className={styles.dataBarTitle}>
+                    <div>{this.props.categoryName}</div>
+                </header>
+                <div className={styles.dataBar}>
                     {this.renderBar()}
-                    <div className="graduation">
+                    <div className={styles.graduation}>
                         {mapToBarGraduation()}
                     </div>
                 </div>

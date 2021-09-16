@@ -1,0 +1,46 @@
+.detail {
+  position: relative;
+  bottom: 0%;
+}
+
+.detailContent{
+  height: 30vh;
+  padding: 10px 20px;
+  overflow-y: auto;
+
+}
+
+.args{
+  cursor: pointer;
+}
+
+.argList {
+  margin: 0;
+  padding: 0px 30px;
+}
+
+.arg{
+  margin-left: 3px;
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
+  padding: 3px 5px;
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+}
+
+thead {
+  background-color: var(--vscode-foreground, gray);
+  color: var(--vscode-editor-background);
+}
+
+.totals {
+  background-color: var(--vscode-foreground, gray);
+  color: var(--vscode-editor-background);
+}
