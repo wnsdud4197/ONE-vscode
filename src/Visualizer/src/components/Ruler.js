@@ -1,42 +1,36 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/ruler.css';
 
-class Ruler extends Component {
-    state = {
-        initGraduationCnt : this.props.calculatedEndTime/(10**(this.props.digit-1))
-    };
+function Ruler({ ratio, calculatedEndTime, digit }) {
+    const [ initGraduationCnt ] = useState(calculatedEndTime / ( 10 ** (digit - 1)));
 
-    componentDidUpdate(prevProps) {
-        if (this.props.ratio === prevProps.ratio) {
-            return;
-        }
-
+    useEffect(() => {
         const body = document.querySelector("body");
         const ruler = document.querySelector(".ruler");
         const rulerBlank = document.querySelector(".rulerBlank");
         const graduation = document.querySelector(".ruler .graduation");
         const cnt =  document.querySelectorAll(".ruler .graduation").length;
         const staticRulerWidth = body.clientWidth - rulerBlank.clientWidth;
-        const staticGraduationWidth = parseInt(staticRulerWidth / this.state.initGraduationCnt);
+        const staticGraduationWidth = parseInt(staticRulerWidth / initGraduationCnt);
 
-        if (graduation.offsetWidth < staticGraduationWidth - 3 && this.props.ratio < prevProps.ratio) { 
-            this.removeGraduation(ruler, cnt);
+        if (graduation.offsetWidth < staticGraduationWidth - 3) { 
+            removeGraduation(ruler, cnt);
         } else if (graduation.offsetWidth < staticGraduationWidth * 2) {
             return;
         } else {
-            this.addGraduation(ruler, cnt);
+            addGraduation(ruler, cnt);
         }
-        this.updateGraduation();
-    }
+        updateGraduation();
+    }, [ratio]);
 
-    removeGraduation(ruler, cnt){
+    function removeGraduation(ruler, cnt){
         for(let i = 0; i < cnt / 2; i++){
             const child = document.querySelector(".ruler .graduation");
             ruler.removeChild(child);
         }
     }
 
-    addGraduation(ruler, cnt){
+    function addGraduation(ruler, cnt){
         for(let i = 0; i < cnt; i++){
             const child = document.createElement('div');
             child.className = 'graduation';
@@ -57,19 +51,18 @@ class Ruler extends Component {
         }
     }
 
-    updateGraduation(){
+    function updateGraduation(){
         const rulerWidth = document.querySelector(".ruler").scrollWidth;
         const allGraduation = document.querySelectorAll(".ruler .graduation");
         let left = 0;
 
         allGraduation.forEach(ele => {
-            console.log(left / rulerWidth * this.props.calculatedEndTime);
-            ele.firstChild.firstChild.innerText = this.calculateGraduation(left / rulerWidth * this.props.calculatedEndTime);
+            ele.firstChild.firstChild.innerText = calculateGraduation(left / rulerWidth * calculatedEndTime);
             left += ele.offsetWidth;
         });
     }
 
-    calculateGraduation(graduation) {
+    function calculateGraduation(graduation) {
         if (graduation >= 1000) {
             return Math.round(graduation / 1000 * 10) /10 + 'ms';
         } else if (graduation >= 1) {
@@ -81,37 +74,36 @@ class Ruler extends Component {
         }
     }
 
-    render() {
-        const mapToRulergraduation = () => { // 줄자 눈금 반복 랜더링
-            const result = [];
+    function mapToRulergraduation() { // 줄자 눈금 반복 랜더링
+        const result = [];
 
-            for(let i = 0; i < parseInt(this.props.calculatedEndTime / (10 ** (this.props.digit - 1))); i++){
-                result.push(
-                    <div className="graduation" key={i}>
-                        <div className="smallGraduation">
-                            <div className="index">
-                                {this.calculateGraduation(i * (10 ** (this.props.digit - 1)))}
-                            </div>
+        for(let i = 0; i < parseInt(calculatedEndTime / (10 ** (digit - 1))); i++){
+            result.push(
+                <div className="graduation" key={i}>
+                    <div className="smallGraduation">
+                        <div className="index">
+                            {calculateGraduation(i * (10 ** (digit - 1)))}
                         </div>
-                        <div className="smallGraduation"></div>
-                        <div className="smallGraduation"></div>
-                        <div className="smallGraduation"></div>
-                        <div className="smallGraduation"></div>
                     </div>
-                );
-            }
-            return result;
-        };
-
-        return (
-            <div className="rulerContainer">
-                <div className="rulerBlank"></div>
-                <div className="ruler">
-                    {mapToRulergraduation()}
+                    <div className="smallGraduation"></div>
+                    <div className="smallGraduation"></div>
+                    <div className="smallGraduation"></div>
+                    <div className="smallGraduation"></div>
                 </div>
+            );
+        }
+        return result;
+    };
+
+    return (
+        <div className="rulerContainer">
+            <div className="rulerBlank"></div>
+            <div className="ruler">
+                {mapToRulergraduation()}
             </div>
-        );
-    }
+        </div>
+    );
+    
 }
 
 export default Ruler;

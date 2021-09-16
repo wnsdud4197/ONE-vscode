@@ -1,54 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import DataBar from './DataBar';
 import styles from '../styles/Level.module.css';
 
-class Level extends Component {
-    constructor(props) {
-        super(props);
-        this.handleLevelClick = this.handleLevelClick.bind(this);
-    }
+function Level({ calculatedEndTime, digit, processName, utility, data, clickBar })  {
+    const [ isPannelOpen, setIsPannelOpen ] = useState(true);
 
-    state = {
-        isPannelOpen: true,
-    };
-
-    handleLevelClick(){
-        this.setState({isPannelOpen: !this.state.isPannelOpen});
-    }
-
-    renderDataBar() {
-        return Object.keys(this.props.data).map(key => {
+    function renderDataBar() {
+        return Object.keys(data).map(key => {
             return  <DataBar
-                        calculatedEndTime={this.props.calculatedEndTime}
-                        digit={this.props.digit}
-                        unit={this.props.unit}
+                        calculatedEndTime={calculatedEndTime}
+                        digit={digit}
                         categoryName={key}
-                        data={this.props.data[key]}
+                        data={data[key]}
                         key={key}
-                        rulerCnt={this.props.rulerCnt}
-                        clickBar={this.props.clickBar}/>;
+                        clickBar={clickBar}/>;
         });
     }
 
-    render() {
-        return (
-            <div className={styles.levelContainer}>
-                <div className={styles.levelHeader}>
-                    <div className={styles.levelTitle} onClick={this.handleLevelClick}>
-                        {this.state.isPannelOpen ? '▼' : '▶'} {this.props.processName} 
-                        <span className={styles.utility}>
-                            {this.props.utility < 1 && ' (' + this.props.utility*100 + '%)'}
-                        </span>
-                    </div>
+    return (
+        <div className={styles.levelContainer}>
+            <div className={styles.levelHeader}>
+                <div className={styles.levelTitle} onClick={() => setIsPannelOpen(!isPannelOpen)}>
+                    {isPannelOpen ? '▼' : '▶'} {processName} 
+                    <span className={styles.utility}>
+                        {utility < 1 && ' (' + utility*100 + '%)'}
+                    </span>
                 </div>
-                {this.state.isPannelOpen &&
-                    <div className={styles.levelContent}>
-                        {this.renderDataBar()}
-                    </div>
-                }
             </div>
-        );
-    }
+            {isPannelOpen &&
+                <div className={styles.levelContent}>
+                    {renderDataBar()}
+                </div>
+            }
+        </div>
+    );
 }
 
 export default Level;

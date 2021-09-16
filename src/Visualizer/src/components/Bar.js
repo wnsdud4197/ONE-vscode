@@ -15,38 +15,36 @@ const StyledBar = styled.div`
     background-color: ${(props) => props.backgroundColor};
 `;
 
-class Bar extends Component {
-    clickBar(e){
+function Bar({ calculatedEndTime, digit, clickBar, data }) {
+    function localClickBar(e){
         const info = {
-            ...this.props.data
+            ...data
         };
 
         delete info['backgroundColor'];
 
         if (e.ctrlKey) {
-            this.props.clickBar(info, 0);
+            clickBar(info, 0);
         } else {
-            this.props.clickBar(info, 1);
+            clickBar(info, 1);
         }
     }
     
-    render() {
-        return (
-            <StyledBar 
-                className={styles.bar}
-                calculatedEndTime={this.props.calculatedEndTime}
-                digit={this.props.digit}
-                onClick={(e) => this.clickBar(e)} 
-                start={this.props.data.ts}
-                duration={this.props.data.dur}
-                name={this.props.data.name}
-                backgroundColor={this.props.data.backgroundColor}>
-                <div className={styles.barTitle}>
-                    {this.props.data.name}
-                </div>
-            </StyledBar>
-        );
-    }
+    return (
+        <StyledBar 
+            className={styles.bar}
+            calculatedEndTime={calculatedEndTime}
+            digit={digit}
+            onClick={(e) => localClickBar(e)} 
+            start={data.ts}
+            duration={data.dur}
+            name={data.name}
+            backgroundColor={data.backgroundColor}>
+            <div className={styles.barTitle}>
+                {data.name}
+            </div>
+        </StyledBar>
+    );
 }
 
 export default Bar;

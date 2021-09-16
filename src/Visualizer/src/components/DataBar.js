@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from "styled-components";
 import Bar from "./Bar";
 import styles from '../styles/DataBar.module.css';
@@ -13,42 +13,42 @@ const StyledBargraduation = styled.div`
     background-color: rgb(204, 204, 204);
 `;
 
-class DataBar extends Component {
-    renderBar() {
-        return this.props.data.map((ele) => {
-            return  <Bar 
-                        calculatedEndTime={this.props.calculatedEndTime}
-                        digit={this.props.digit}
-                        clickBar={this.props.clickBar}
+function DataBar({ calculatedEndTime, digit, categoryName, data, clickBar })  {
+    function renderBar() {
+        return data.map((ele) => {
+            return <Bar 
+                        calculatedEndTime={calculatedEndTime}
+                        digit={digit}
+                        clickBar={clickBar}
                         data={ele}
                         key={ele.pk}
                         />;
         });
     }
 
-    render() {
-        const mapToBarGraduation = () => {
-            const result = [];
-            for(let i = 0; i < parseInt(this.props.calculatedEndTime / (10 ** (this.props.digit - 1))); i++){
-                result.push(<StyledBargraduation i={i} cnt={parseInt(this.props.calculatedEndTime / (10 ** (this.props.digit - 1)))} key={i}/>);
-            }
-            return result;
-        };
+    function mapToBarGraduation() {
+        const result = [];
 
-        return (
-            <div className={styles.dataBarContainer}>
-                <header className={styles.dataBarTitle}>
-                    <div>{this.props.categoryName}</div>
-                </header>
-                <div className={styles.dataBar}>
-                    {this.renderBar()}
-                    <div className={styles.graduation}>
-                        {mapToBarGraduation()}
-                    </div>
+        for(let i = 0; i < parseInt(calculatedEndTime / (10 ** (digit - 1))); i++){
+            result.push(<StyledBargraduation i={i} cnt={parseInt(calculatedEndTime / (10 ** (digit - 1)))} key={i}/>);
+        }
+        
+        return result;
+    };
+
+    return (
+        <div className={styles.dataBarContainer}>
+            <header className={styles.dataBarTitle}>
+                <div>{categoryName}</div>
+            </header>
+            <div className={styles.dataBar}>
+                {renderBar()}
+                <div className={styles.graduation}>
+                    {mapToBarGraduation()}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default DataBar;

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import html2canvas from 'html2canvas';
 import styles from '../styles/DataBar.module.css';
 
-class Capture extends Component {
-    onCapture(area){
+function Capture() {
+    function onCapture(area){
         const capture = document.querySelector(area);
         html2canvas(capture)
         .then(canvas => {
@@ -11,12 +11,12 @@ class Capture extends Component {
                 var blob = canvas.msToBlob();
                 window.navigator.msSaveBlob(blob, "capture.png");
             } else {
-                this.onSaveAs(canvas.toDataURL(), "capture.png");
+                onSaveAs(canvas.toDataURL(), "capture.png");
             }
         });
     }
 
-    onSaveAs(uri, filename) {
+    function onSaveAs(uri, filename) {
         const link = document.createElement('a');
         link.href = uri;
         link.download = filename;
@@ -25,14 +25,12 @@ class Capture extends Component {
         document.body.removeChild(link);
     }
 
-    render() {
-        return (
-            <div className={styles.captureBtns}>
-                <button onClick={() => this.onCapture('.main-container')}>Capture Screen</button>
-                <button onClick={() => this.onCapture('.content')}>Capture Graph</button>
-            </div>
-        );
-    }
+    return (
+        <div className={styles.captureBtns}>
+            <button onClick={() => onCapture('.mainContainer')}>Capture Screen</button>
+            <button onClick={() => onCapture('.content')}>Capture Graph</button>
+        </div>
+    );
 }
 
 export default Capture;
