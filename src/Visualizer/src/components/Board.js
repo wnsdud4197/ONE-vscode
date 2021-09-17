@@ -112,7 +112,7 @@ function Board() {
             ele['backgroundColor'] = backgroundColor[ele.name];
             ele['pk'] = idx;
             processedData[ele.pid][ele.tid].push(ele);
-            utility[ele.pid] = utility[ele.pid] !== undefined ? utility[ele.pid] + ele.dur : ele.dur;
+            utility[ele.pid] = utility[ele.pid] ? utility[ele.pid] + ele.dur : ele.dur;
         });
 
         Object.keys(utility).forEach(key => {
@@ -162,7 +162,7 @@ function Board() {
                 </div>
             </nav>
             <div className={styles.board}>
-                {data ? 
+                {data && 
                     <ZoomInOut className="content" ratio={ratio}>
                         <Ruler
                             ratio={ratio}
@@ -170,7 +170,7 @@ function Board() {
                             digit={digit}/>
                         {renderLevel()}
                     </ZoomInOut>
-                : ''}
+                }
             </div>
             <Detail 
                 selectedOP={selectedOP}

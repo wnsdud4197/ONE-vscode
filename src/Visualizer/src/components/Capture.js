@@ -1,6 +1,6 @@
 import React from 'react';
 import html2canvas from 'html2canvas';
-import styles from '../styles/DataBar.module.css';
+import styles from '../styles/Capture.module.css';
 
 function Capture() {
     function onCapture(area){
